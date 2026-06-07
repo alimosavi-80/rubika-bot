@@ -1,5 +1,3 @@
-print("شروع...")
-bot.run()
 from rubka import Bot
 import os
 import threading
