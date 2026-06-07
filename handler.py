@@ -48,6 +48,3 @@ def handler(b, message):
             bot.send_message(chat_id, "✅ ربات فعاله!")
 
 bot.run()
-
-
-bot.run()
