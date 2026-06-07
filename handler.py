@@ -23,13 +23,11 @@ def handler(b, message):
     text = message.text or ""
     chat_id = message.chat_id
     username = getattr(message, "username", "")
-
     if text == "get_code":
         stats = load_stats()
         stats["clicks"] += 1
         save_stats(stats)
         bot.send_message(chat_id, "کد رفرال شما 👇\n`Cbie`\n\nروی کد نگه دارید تا کپی بشه ✅")
-
     if username == ADMIN_USERNAME:
         if text == "/start":
             bot.send_message(chat_id, "👋 سلام ادمین!\n\n/stats — آمار\n/status — وضعیت")
@@ -48,11 +46,5 @@ class Handler(BaseHTTPRequestHandler):
         pass
 
 port = int(os.environ.get("PORT", 10000))
-server = HTTPServer(("0.0.0.0", port), Handler)
+server = HTTPServer(("0.0.0.0",
 
-thread = threading.Thread(target=bot.run)
-thread.daemon = True
-thread.start()
-
-print(f"Server running on port {port}")
-server.serve_forever()
