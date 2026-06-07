@@ -1,6 +1,8 @@
 from rubka import Bot
 import json
 import os
+import threading
+from http.server import HTTPServer, BaseHTTPRequestHandler
 
 bot = Bot(token="BEJGJH0HCLEWBCNHWPZTTYGYVZOYVQAZEJFZBQFENOZXQDSEXZQWRGZPURETKLDV")
 ADMIN_USERNAME = "Ali_mosavii80"
@@ -47,4 +49,24 @@ def handler(b, message):
         elif text == "/status":
             bot.send_message(chat_id, "✅ ربات فعاله!")
 
+# یه سرور ساده برای راضی کردن Render
+class Handler(BaseHTTPRequestHandler):
+    def do_GET(self):
+        self.send_response(200)
+        self.end_headers()
+        self.wfile.write(b"Bot is running!")
+    def log_message(self, format, *args):
+        pass
+
+def run_server():
+    port = int(os.environ.get("PORT", 8080))
+    server = HTTPServer(("0.0.0.0", port), Handler)
+    server.serve_forever()
+
+# سرور رو توی thread جدا اجرا کن
+thread = threading.Thread(target=run_server)
+thread.daemon = True
+thread.start()
+
+bot.run()
 bot.run()
